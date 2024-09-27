@@ -1,0 +1,7 @@
+# dune init proj lab3
+# OCAMLPARAM: unset
+# Shared cache: disabled
+# Shared cache location:
+# C:\Users\jorda\AppData\Local\Microsoft\Windows\INetCache\dune\db
+# Workspace root: "C:\\Users\\jorda\\iCloudDrive\\CSI3120\\Lab03\\lab3"
+# Auto-detected concurrency: 16
