@@ -1,5 +1,4 @@
-
-
+(* Stores location as a record type *)
  type location = {
   name : string;
   x : float;
@@ -7,16 +6,18 @@
   priority : int;
 }
 
+(* Stores vehicle as a record type *)
 type vehicle = {
   id : int;
   capacity : int;
   locations : location list;
 }
 
-(*Auliary function for sorting the locations by priority*)
+(*Auxiliary function for sorting the locations by priority*)
 let sort_by_priority locations = 
   List.sort(fun l1 l2 -> (compare l1.priority l2.priority)) locations;;
 
+(* A function that prompts location details to be inputted via the command line *)
 let ask_location_information location_num = 
   Printf.printf "Enter details for location %d\nLocation name: " location_num;
   let name = input_line stdin in 
@@ -33,11 +34,13 @@ let ask_location_information location_num =
   { name = name; x = (float_of_string x); y = (float_of_string y); priority = (int_of_string priority) }
 
 
+(* A function that prompts vehicle details to be inputted via the command line *)
 let ask_vehicle_information vehicle_num = 
   Printf.printf "Enter details for location %d, please enter the following details:\nCapacity: " vehicle_num;
   let capacity = input_line stdin in 
   { id = vehicle_num; capacity = (int_of_string capacity); locations = []}
   
+
 (*Function to calculate the distance between two points*)
 let calc_dist loc1 loc2 = 
   sqrt((loc2.x -. loc1.x) *. (loc2.x -. loc1.x) +. (loc2.y -. loc1.y) *. (loc2.y -. loc1.y))
@@ -66,16 +69,22 @@ let assign locations vehicles =
   assign_vehicle vehicles sorted [] 
     
 
-let read_locations num =
-  let list_jobs = ref [] in
-  for i = 0 to num do
-    list_jobs := !list_jobs @ [ask_location_information i]
-  done;
-  !list_jobs
 
-let read_vehicles num =
+
+(* A function that reads information for n locations by repeatedly calling ask_location_information n times 
+  Returns a list of location records *)
+let read_locations n =
+  let list_locations = ref [] in
+  for i = 0 to n do
+    list_locations := !list_locations @ [ask_location_information i]
+  done;
+  !list_locations
+
+(* A function that reads information for n vehicles by repeatedly calling ask_vehicle_information n times
+  Returns a list of vehicle records *)
+let read_vehicles n =
   let list_vehicles = ref [] in
-  for i = 0 to num do
+  for i = 0 to n do
     list_vehicles := !list_vehicles @ [ask_vehicle_information i]
   done;
   !list_vehicles
