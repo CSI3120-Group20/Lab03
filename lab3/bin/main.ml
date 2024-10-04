@@ -1,4 +1,6 @@
-type location = {
+
+
+ type location = {
   name : string;
   x : int;
   y : int;
@@ -9,6 +11,10 @@ type vehicle = {
   id : int;
   capacity : int;
 }
+
+(*Auliary function for sorting the locations by priority*)
+let sort_by_priority locations = 
+  List.sort(fun l1 l2 -> (compare l1.priority l2.priority)) locations;;
 
 let ask_location_information location_num = 
   Printf.printf "Enter details for location %d\nLocation name: " location_num;
@@ -50,4 +56,6 @@ let () =
   let prompt = "Enter the number of delivery locations: " in
   Printf.printf "%s" prompt;
   let num_locations = read_line () in
-  read_locations (int_of_string num_locations) in ()
+  let locations = read_locations (int_of_string num_locations) in
+  let length = List.length locations in
+  print_int length;
