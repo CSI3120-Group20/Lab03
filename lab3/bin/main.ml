@@ -1,5 +1,4 @@
-
-
+(* Stores location as a record type *)
  type location = {
   name : string;
   x : int;
@@ -7,15 +6,17 @@
   priority : int;
 }
 
+(* Stores vehicle as a record type *)
 type vehicle = {
   id : int;
   capacity : int;
 }
 
-(*Auliary function for sorting the locations by priority*)
+(*Auxiliary function for sorting the locations by priority*)
 let sort_by_priority locations = 
   List.sort(fun l1 l2 -> (compare l1.priority l2.priority)) locations;;
 
+(* A function that prompts location details to be inputted via the command line *)
 let ask_location_information location_num = 
   Printf.printf "Enter details for location %d\nLocation name: " location_num;
   let name = input_line stdin in 
@@ -31,22 +32,26 @@ let ask_location_information location_num =
 
   { name = name; x = (int_of_string x); y = (int_of_string y); priority = (int_of_string priority) }
 
+(* A function that prompts vehicle details to be inputted via the command line *)
 let ask_vehicle_information vehicle_num = 
   Printf.printf "Enter details for location %d, please enter the following details:\nCapacity: " vehicle_num;
   let capacity = input_line stdin in 
   { id = vehicle_num; capacity = (int_of_string capacity) }
   
-
-let read_locations num =
-  let list_jobs = ref [] in
-  for i = 0 to num do
-    list_jobs := !list_jobs @ [ask_location_information i]
+(* A function that reads information for n locations by repeatedly calling ask_location_information n times 
+  Returns a list of location records *)
+let read_locations n =
+  let list_locations = ref [] in
+  for i = 0 to n do
+    list_locations := !list_locations @ [ask_location_information i]
   done;
-  !list_jobs
+  !list_locations
 
-let read_vehicles num =
+(* A function that reads information for n vehicles by repeatedly calling ask_vehicle_information n times
+  Returns a list of vehicle records *)
+let read_vehicles n =
   let list_vehicles = ref [] in
-  for i = 0 to num do
+  for i = 0 to n do
     list_vehicles := !list_vehicles @ [ask_vehicle_information i]
   done;
   !list_vehicles
