@@ -75,7 +75,7 @@ let assign locations vehicles =
   Returns a list of location records *)
 let read_locations n =
   let list_locations = ref [] in
-  for i = 0 to n do
+  for i = 1 to n do
     list_locations := !list_locations @ [ask_location_information i]
   done;
   !list_locations
@@ -84,7 +84,7 @@ let read_locations n =
   Returns a list of vehicle records *)
 let read_vehicles n =
   let list_vehicles = ref [] in
-  for i = 0 to n do
+  for i = 1 to n do
     list_vehicles := !list_vehicles @ [ask_vehicle_information i]
   done;
   !list_vehicles
