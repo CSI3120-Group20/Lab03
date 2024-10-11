@@ -1,5 +1,5 @@
 (* Stores location as a record type *)
- type location = {
+type location = {
   name : string;
   x : float;
   y : float;
@@ -41,9 +41,9 @@ let ask_vehicle_information vehicle_num =
   { id = vehicle_num; capacity = (int_of_string capacity); locations = []}
   
 
-(*Function to calculate the distance between two points*)
-let calc_dist loc1 loc2 = 
-  sqrt((loc2.x -. loc1.x) *. (loc2.x -. loc1.x) +. (loc2.y -. loc1.y) *. (loc2.y -. loc1.y))
+(*Function to calculate the distance between a location and a coordinate*)
+let calc_dist x y location = 
+  sqrt(((x -. location.x) *. (x -. location.x)) +. ((y -. location.y) *. (y -. location.y)))
 
 
 (*Function for spliting a list of locations*)
@@ -92,11 +92,14 @@ let read_vehicles n =
 
   (*function to display the optimized route for each vehicle*)
   let print_locations_list locations =
+    let dist = ref 0. in (* Iterate distance *)
+    let x = ref (List.hd locations).x in (* Get x coordinate of first location in list. List.hd was suggested by ChatGPT*)
+    let y = ref (List.hd locations).y in (* Get y coordinate of first location in list.*)
     List.iter (fun location ->
-      Printf.printf "name: %s name, priority: %d priority"
-        location.name location.priority
-    (*print out total distance here*)
-    
+      dist := calc_dist !x !y location;
+      Printf.printf "location: %s, distance travelled: %f\n" location.name !dist;
+      x := location.x;
+      y := location.y;
     ) locations 
 
 (* Main method *)
@@ -105,5 +108,4 @@ let () =
   Printf.printf "%s" prompt;
   let num_locations = read_line () in
   let locations = read_locations (int_of_string num_locations) in
-  let length = List.length locations in
-  print_int length;
+  print_locations_list locations;
