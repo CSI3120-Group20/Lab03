@@ -164,7 +164,22 @@ let read_vehicles n =
 
       ) vehicles
 
+(*function that prompts whether the user wants all vehicles to return to start*)
+let return_to_start() = 
+    print_endline "Return to start? (Y/N)";
+    let choice = read_line() in
+    if choice = "Y" then true
+    else false
 
+(*function that sets all vehicles to start*)
+let set_to_start vehicles = 
+  (*iterate through the list, returns a new list of vehicles with locations returned to first location*)
+  List.map(fun vehicle -> 
+    match vehicle.locations with
+    | [] -> vehicle (*returns original vehicle if no locations*)
+    | head::_ -> {vehicle with locations =  [head]})vehicles (*sets location of current vehicle to head*)
+    
+    
 (* Main method *)
 let () =
   let num_locations = get_non_negative_int_number("Enter the number of delivery locations: ") in
@@ -192,3 +207,16 @@ let () =
       let assigned_vehicles = assign locations vehicles in
 
       print_opt_route_distance(assigned_vehicles);
+      
+      (*Promprts the user whether they want o return to start*)
+      let choice = return_to_start() in
+      (*return the vehicle to start if true, else exit*)
+      if choice then 
+        let returned = set_to_start assigned_vehicles in
+        
+        print_opt_route_distance(returned);
+        Printf.printf "\n";
+        Printf.printf "All vehicles returned to start";
+      else
+        exit 0
+
