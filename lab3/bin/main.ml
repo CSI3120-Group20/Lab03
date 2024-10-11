@@ -20,16 +20,16 @@ let sort_by_priority locations =
 (* A function that prompts location details to be inputted via the command line *)
 let ask_location_information location_num = 
   Printf.printf "Enter details for location %d\nLocation name: " location_num;
-  let name = input_line stdin in 
+  let name = read_line () in 
 
   Printf.printf "X coordinate: ";
-  let x = input_line stdin in
+  let x = read_line () in
 
   Printf.printf "Y coordinate: ";
-  let y = input_line stdin in
+  let y = read_line () in
   
   Printf.printf "Priority: ";
-  let priority = input_line stdin in
+  let priority = read_line () in
 
   { name = name; x = (float_of_string x); y = (float_of_string y); priority = (int_of_string priority) }
 
@@ -37,7 +37,7 @@ let ask_location_information location_num =
 (* A function that prompts vehicle details to be inputted via the command line *)
 let ask_vehicle_information vehicle_num = 
   Printf.printf "Enter details for location %d, please enter the following details:\nCapacity: " vehicle_num;
-  let capacity = input_line stdin in 
+  let capacity = read_line () in 
   { id = vehicle_num; capacity = (int_of_string capacity); locations = []}
   
 
@@ -75,7 +75,7 @@ let assign locations vehicles =
   Returns a list of location records *)
 let read_locations n =
   let list_locations = ref [] in
-  for i = 0 to n do
+  for i = 1 to n do
     list_locations := !list_locations @ [ask_location_information i]
   done;
   !list_locations
@@ -84,7 +84,7 @@ let read_locations n =
   Returns a list of vehicle records *)
 let read_vehicles n =
   let list_vehicles = ref [] in
-  for i = 0 to n do
+  for i = 1 to n do
     list_vehicles := !list_vehicles @ [ask_vehicle_information i]
   done;
   !list_vehicles
